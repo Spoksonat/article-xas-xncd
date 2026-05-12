@@ -1,55 +1,39 @@
-# article_xas_xncd
+# article-xas-xncd
 
-Proyecto base para analisis y desarrollo de scripts de espectroscopia (XAS/XNCD).
+Small codebase and notebooks for **carbon K-edge XAS and XNCD** figures tied to a methox-type chiral system: **gas phase**, **water**, and **perfluorohexane** environments, using **CAM-B3LYP** as the main functional and **B3LYP** for supporting plots. Spectra are built from **WaveT**-style project folders (averaged linear and dichroic response) plus **PMM** stick data bundled under `data/spettro-*` and `data/spettri-singoli/`.
 
-## Estructura
+## What lives here
 
-- `src/`: codigo fuente del paquete principal.
-- `data/raw/`: datos originales sin procesar.
-- `data/processed/`: datos transformados para analisis.
-- `results/`: figuras, tablas y salidas finales.
-- `notebooks/`: notebooks exploratorios.
-- `scripts/`: utilidades ejecutables (pipeline, conversion, etc.).
-- `tests/`: pruebas automaticas.
-- `docs/`: notas tecnicas o documentacion adicional.
+- **`notebooks/plots.ipynb`** — main article-style figures (energy axes, PCM vs PMM water panels, solvent comparisons, conversion factors for PMM intensities).
+- **`notebooks/generate_spectra.ipynb`** — spectrum generation / exploration workflow.
+- **`data/paths.json`** — absolute paths to WaveT templates on your machine (gas, PCM solvents, etc.) and pointers to local PMM bundles; **you must edit this after cloning**.
+- **`src/article_xas_xncd/class_spectrum.py`** — `Spectrum` helper used by the notebooks to load projects and build averaged XAS/XNCD curves.
 
-## Entorno virtual
+`results/` is for exports; large **local caches** (e.g. under `data/.spectrum_cache/`) are gitignored.
 
-Crear (ya creado en este repo):
+## Setup
 
 ```bash
 python3 -m venv .venv
-```
-
-Activar:
-
-```bash
-source .venv/bin/activate
-```
-
-Instalar dependencias:
-
-```bash
-pip install --upgrade pip
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -U pip
 pip install -r requirements.txt
-pip install -r requirements-dev.txt
+pip install -e .
 ```
 
-## Uso rapido
+Use **Python ≥ 3.10** if you follow `pyproject.toml`; older interpreters may still run the notebooks if your stack allows it.
 
-Ejecutar script base:
+## Running
+
+Open the notebooks with Jupyter (or VS Code / Cursor). There is a minimal CLI placeholder:
 
 ```bash
 python -m article_xas_xncd.main
 ```
 
-Ejecutar tests:
+## Notes
 
-```bash
-pytest -q
-```
+- **`paths.json` is machine-specific.** Cloning on another host will not reproduce WaveT paths under `/data/...` or local reference spectra unless you update the JSON.
+- Experimental and AMS reference paths in `paths.json` point to files outside this repo; add them or change keys if you do not need those overlays.
 
-## Notas
-
-- Guarda resultados reproducibles en `results/`.
-- Evita modificar datos originales en `data/raw/`.
+Public mirror: [github.com/Spoksonat/article-xas-xncd](https://github.com/Spoksonat/article-xas-xncd).
