@@ -220,7 +220,7 @@ class Spectrum:
             else:
                 raise ValueError("Choose a correct option for the parameter: region")
         else:
-            self.oscillatory_strength, self.rotatory_strength =  oscillator_strength[1:self.number_of_states+1], rotatory_strength[1:self.number_of_states+1]
+            self.oscillatory_strength, self.rotatory_strength =  (2/3)*(self.root_energies/self.conversion_factor_hartree_to_eV)*oscillator_strength[1:self.number_of_states+1], rotatory_strength[1:self.number_of_states+1]
 
     def get_energies_states(self):
         roots = []
